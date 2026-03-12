@@ -43,7 +43,7 @@ public class BookMyStayApp {
         }
     }
 
-    // RoomInventory class using HashMap
+    // RoomInventory class
     static class RoomInventory {
 
         private Map<String, Integer> roomAvailability;
@@ -62,16 +62,46 @@ public class BookMyStayApp {
         public Map<String, Integer> getRoomAvailability() {
             return roomAvailability;
         }
+    }
 
-        public void updateAvailability(String roomType, int count) {
-            roomAvailability.put(roomType, count);
+    // Room Search Service (Use Case 4)
+    static class RoomSearchService {
+
+        public void searchAvailableRooms(
+                RoomInventory inventory,
+                Room singleRoom,
+                Room doubleRoom,
+                Room suiteRoom) {
+
+            Map<String, Integer> availability = inventory.getRoomAvailability();
+
+            System.out.println("Room Search\n");
+
+            if (availability.get("Single") > 0) {
+                System.out.println("Single Room:");
+                singleRoom.displayRoomDetails();
+                System.out.println("Available: " + availability.get("Single"));
+                System.out.println();
+            }
+
+            if (availability.get("Double") > 0) {
+                System.out.println("Double Room:");
+                doubleRoom.displayRoomDetails();
+                System.out.println("Available: " + availability.get("Double"));
+                System.out.println();
+            }
+
+            if (availability.get("Suite") > 0) {
+                System.out.println("Suite Room:");
+                suiteRoom.displayRoomDetails();
+                System.out.println("Available: " + availability.get("Suite"));
+                System.out.println();
+            }
         }
     }
 
     // Main Method
     public static void main(String[] args) {
-
-        System.out.println("Hotel Room Inventory Status\n");
 
         Room singleRoom = new SingleRoom();
         Room doubleRoom = new DoubleRoom();
@@ -79,23 +109,12 @@ public class BookMyStayApp {
 
         RoomInventory inventory = new RoomInventory();
 
-        System.out.println("Single Room:");
-        singleRoom.displayRoomDetails();
-        System.out.println("Available Rooms: " +
-                inventory.getRoomAvailability().get("Single"));
+        RoomSearchService searchService = new RoomSearchService();
 
-        System.out.println();
-
-        System.out.println("Double Room:");
-        doubleRoom.displayRoomDetails();
-        System.out.println("Available Rooms: " +
-                inventory.getRoomAvailability().get("Double"));
-
-        System.out.println();
-
-        System.out.println("Suite Room:");
-        suiteRoom.displayRoomDetails();
-        System.out.println("Available Rooms: " +
-                inventory.getRoomAvailability().get("Suite"));
+        searchService.searchAvailableRooms(
+                inventory,
+                singleRoom,
+                doubleRoom,
+                suiteRoom);
     }
 }
