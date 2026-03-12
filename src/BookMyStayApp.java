@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class UseCase3InventorySetup {
+public class BookMyStayApp {
 
     // Abstract Room class
     static abstract class Room {
